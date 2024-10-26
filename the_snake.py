@@ -1,4 +1,4 @@
-ffrfrom random import randint
+from random import randint
 import pygame
 from typing import Optional, Tuple, List
 
@@ -169,3 +169,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
