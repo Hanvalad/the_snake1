@@ -80,8 +80,10 @@ class Snake(GameObject):
 
     def __init__(self) -> None:
         """Инициализирует начальное состояние змейки."""
-        super().__init__((GRID_WIDTH // 2 * GRID_SIZE,
-                          GRID_HEIGHT // 2 * GRID_SIZE), SNAKE_COLOR)
+        super().__init__(
+            (GRID_WIDTH // 2 * GRID_SIZE, GRID_HEIGHT // 2 * GRID_SIZE),
+            SNAKE_COLOR
+        )
         self.length: int = 1
         self.positions: List[Tuple[int, int]] = [self.position]
         self.direction: Tuple[int, int] = RIGHT
