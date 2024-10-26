@@ -91,7 +91,8 @@ class Snake(GameObject):
             self.next_direction = new_direction
 
     def move(self) -> None:
-        """Обновляет позицию змейки, добавляет новую голову и удаляет последний сегмент, если длина не увеличилась."""
+        """Обновляет позицию змейки, добавляет новую голову и
+        удаляет последний сегмент, если длина не увеличилась."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -117,7 +118,8 @@ class Snake(GameObject):
         self.draw_cell(surface, head_position, SNAKE_COLOR)
 
     def get_head_position(self) -> Tuple[int, int]:
-        """Возвращает позицию головы змейки (первый элемент в списке positions)."""
+        """Возвращает позицию головы змейки
+        (первый элемент в списке positions)."""
         return self.positions[0]
 
     def reset(self) -> None:
