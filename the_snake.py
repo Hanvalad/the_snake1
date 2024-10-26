@@ -13,25 +13,17 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Цвет фона - черный:
-BOARD_BACKGROUND_COLOR = (0, 0, 0)
-
-# Цвет границы ячейки
-BORDER_COLOR = (93, 216, 228)
-
-# Цвет яблока
-APPLE_COLOR = (255, 0, 0)
-
-# Цвет змейки
-SNAKE_COLOR = (0, 255, 0)
+# Цвета
+BOARD_BACKGROUND_COLOR = (0, 0, 0)  # Фон поля - черный
+BORDER_COLOR = (93, 216, 228)  # Граница ячейки
+APPLE_COLOR = (255, 0, 0)  # Яблоко
+SNAKE_COLOR = (0, 255, 0)  # Змейка
 
 # Скорость движения змейки:
 SPEED = 10
 
 # Настройка игрового окна:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-
-# Заголовок окна игрового поля:
 pygame.display.set_caption('Змейка')
 
 # Настройка времени:
@@ -39,45 +31,46 @@ clock = pygame.time.Clock()
 
 
 class Apple:
-    """Представляет яблоко на игровом поле."""
+    """Класс для представления яблока на игровом поле."""
 
     def __init__(self):
-        """Инициализация яблока с случайной позицией."""
+        """Инициализация позиции яблока и цвета тела."""
         self.position = self.random_position()
         self.body_color = APPLE_COLOR
 
     def random_position(self):
-        """Генерирует случайную позицию для яблока."""
+        """Генерирует случайную позицию для яблока на сетке."""
         return (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
 
     def draw(self):
-        """Отрисовывает яблоко на игровом поле."""
+        """Отображение яблока на игровом экране."""
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Snake:
-    """Представляет змейку на игровом поле."""
+    """Класс для представления змейки."""
 
     def __init__(self):
-        """Инициализация змейки с начальной позицией и направлением."""
-        self.positions = [(GRID_WIDTH // 2 * GRID_SIZE, GRID_HEIGHT // 2 * GRID_SIZE)]
+        """Инициализация начальных параметров змейки."""
+        self.positions = [(GRID_WIDTH // 2 * GRID_SIZE,
+                           GRID_HEIGHT // 2 * GRID_SIZE)]
         self.direction = choice([UP, DOWN, LEFT, RIGHT])
         self.body_color = SNAKE_COLOR
         self.next_direction = None
         self.last = None
 
     def move(self):
-        """Двигает змейку в текущем направлении."""
+        """Перемещение змейки в текущем направлении."""
         x, y = self.positions[0]
         dx, dy = self.direction
         new_head = ((x + dx * GRID_SIZE) % SCREEN_WIDTH,
                     (y + dy * GRID_SIZE) % SCREEN_HEIGHT)
 
-        if new_head in self.positions[1:]:  # Проверка столкновения с телом
-            raise SystemExit
+        if new_head in self.positions[1:]:
+            raise SystemExit  # Конец игры при столкновении с телом
 
         self.positions.insert(0, new_head)
         self.last = self.positions.pop() if len(self.positions) > 1 else None
@@ -87,7 +80,7 @@ class Snake:
         self.positions.append(self.positions[-1])
 
     def draw(self):
-        """Отрисовывает змейку на игровом поле."""
+        """Отображение змейки на игровом экране."""
         for position in self.positions[:-1]:
             rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, self.body_color, rect)
@@ -102,14 +95,14 @@ class Snake:
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
     def update_direction(self):
-        """Обновляет направление змейки."""
+        """Обновляет направление движения змейки на основе следующего шага."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
 
 def handle_keys(snake):
-    """Обрабатывает нажатия клавиш управления."""
+    """Обрабатывает нажатия клавиш для управления направлением змейки."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -126,7 +119,7 @@ def handle_keys(snake):
 
 
 def main():
-    """Основная функция игры."""
+    """Основная функция для инициализации и запуска игры."""
     pygame.init()
     snake = Snake()
     apple = Apple()
