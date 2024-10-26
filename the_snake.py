@@ -2,35 +2,35 @@ from random import randint
 import pygame
 from typing import Optional, Tuple, List
 
-# Инициализация PyGame:
+# Инициализация PyGame
 pygame.init()
 
-# Константы для размеров поля и сетки:
+# Константы для размеров поля и сетки
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-# Направления движения:
+# Направления движения
 UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Цвета:
+# Цвета
 BOARD_BACKGROUND_COLOR = (0, 0, 0)  # Черный цвет фона
 BORDER_COLOR = (93, 216, 228)  # Цвет границы ячейки
 APPLE_COLOR = (255, 0, 0)  # Цвет яблока
 SNAKE_COLOR = (0, 255, 0)  # Цвет змейки
 
-# Скорость движения змейки:
+# Скорость движения змейки
 SPEED = 20
 
-# Настройка игрового окна:
+# Настройка игрового окна
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 pygame.display.set_caption('Змейка')  # Заголовок окна
 
-# Настройка времени:
+# Настройка времени
 clock = pygame.time.Clock()
 
 
@@ -91,16 +91,17 @@ class Snake(GameObject):
             self.next_direction = new_direction
 
     def move(self) -> None:
-        """Обновляет позицию змейки, добавляет новую голову и
-        удаляет последний сегмент, если длина не увеличилась."""
+        """Обновляет позицию змейки и добавляет новую голову, удаляя последний сегмент."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
         cur_head = self.positions[0]
         x, y = self.direction
-        new_head = ((cur_head[0] + (x * GRID_SIZE)) % SCREEN_WIDTH,
-                     (cur_head[1] + (y * GRID_SIZE)) % SCREEN_HEIGHT)
+        new_head = (
+            (cur_head[0] + (x * GRID_SIZE)) % SCREEN_WIDTH,
+            (cur_head[1] + (y * GRID_SIZE)) % SCREEN_HEIGHT,
+        )
 
         if len(self.positions) > 2 and new_head in self.positions[2:]:
             self.reset()
@@ -118,8 +119,7 @@ class Snake(GameObject):
         self.draw_cell(surface, head_position, SNAKE_COLOR)
 
     def get_head_position(self) -> Tuple[int, int]:
-        """Возвращает позицию головы змейки
-        (первый элемент в списке positions)."""
+        """Возвращает позицию головы змейки (первый элемент в списке positions)."""
         return self.positions[0]
 
     def reset(self) -> None:
@@ -171,4 +171,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-
