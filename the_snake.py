@@ -65,8 +65,10 @@ class Apple(GameObject):
 
     def randomize_position(self) -> None:
         """Устанавливает случайное положение яблока на игровом поле."""
-        self.position = (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-                         randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
+        self.position = (
+            randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        )
 
     def draw(self, surface: pygame.Surface) -> None:
         """Отрисовывает яблоко на поверхности."""
@@ -171,3 +173,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
